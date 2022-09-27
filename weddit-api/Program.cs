@@ -38,6 +38,27 @@ builder.Services.Configure<JsonOptions>(options =>
 
 var app = builder.Build();
 
-app.MapGet("/", () => "Hello World!");
+// Seed data hvis nødvendigt.
+using (var scope = app.Services.CreateScope())
+{
+    var dataService = scope.ServiceProvider.GetRequiredService<DataService>();
+    dataService.SeedData(); // Fylder data på, hvis databasen er tom. Ellers ikke.
+}
+
+app.UseHttpsRedirection();
+app.UseCors(AllowSomeStuff);
+
+// Middleware der kører før hver request. Sætter ContentType for alle responses til "JSON".
+app.Use(async (context, next) =>
+{
+    context.Response.ContentType = "application/json; charset=utf-8";
+    await next(context);
+});
+
+// DataService fås via "Dependency Injection" (DI)
+app.MapGet("/", (DataService service) =>
+{
+    return new { message = "Hello World!" };
+});
 
 app.Run();
