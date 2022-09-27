@@ -1,16 +1,18 @@
+using System;
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Model;
 
 namespace Data
 {
-    public class ThreadContext : DbContext
+    public class PostContext : DbContext
     {
-        public DbSet<Thread> Threads => Set<Thread>();
+        public DbSet<Post> Posts => Set<Post>();
         public DbSet<Comment> Comments => Set<Comment>();
         public DbSet<User> Users => Set<User>();
 
 
-        public ThreadContext (DbContextOptions<ThreadContext> options)
+        public PostContext (DbContextOptions<PostContext> options)
             : base(options)
         {
             // Den her er tom. Men ": base(options)" sikre at constructor

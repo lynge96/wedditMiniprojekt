@@ -1,7 +1,8 @@
 namespace Model
 {
-    public class Thread {
-        public long ThreadId { get; set; }
+    public class Post
+    {
+        public long PostId { get; set; }
         public DateTime Date { get; set; }
         public string Title { get; set; }
         public User User { get; set; }
@@ -9,7 +10,8 @@ namespace Model
         public string Text { get; set; }
         public List<Comment> Comments { get; set; } = new List<Comment>();
 
-        public Thread(DateTime date = DateTime.now, string title = "", User user = new User { Username = "" }, int votes = 0, string text = "") {
+        public Post(DateTime date = new DateTime(), string title = "", User user = null, int votes = 0, string text = "")
+        {
             Date = date;
             Title = title;
             User = user;
@@ -17,7 +19,8 @@ namespace Model
             Text = text;
         }
 
-        public Thread() {
+        public Post()
+        {
 
         }
 
