@@ -10,12 +10,13 @@ namespace Model
         public int Votes { get; set; }
         public long PostId { get; set; }
 
-        public Comment(DateTime date = new DateTime(), User user = null, string text = "", int votes = 0)
+        public Comment(DateTime date = new DateTime(), User user = null, string text = "", int votes = 0, long postId = 0)
         {
             Date = date;
             User = user;
             Text = text;
             Votes = votes;
+            PostId = postId;
         }
         public Comment()
         {

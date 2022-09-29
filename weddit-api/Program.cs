@@ -1,3 +1,4 @@
+using System.Threading;
 using Data;
 using Microsoft.AspNetCore.Http.Json;
 using Microsoft.EntityFrameworkCore;
@@ -60,5 +61,21 @@ app.MapGet("/", (DataService service) =>
 {
     return new { message = "Hello World!" };
 });
+
+
+// GET/api/threads - Returnerer en liste over alle tråde
+
+
+// GET /api/threads/{threadId} - Returnerer en tråd med tilhørende kommentarer
+
+
+// POST /api/threads/{threadsId}/ comments - Poster en ny kommentar, og tilføjer den til tråden
+
+
+// PUT /api/thread/{threadId}/ vote - Opdaterer en tråds antal stemmer
+
+
+// PUT /api/threads/{threadsId}/comments/{commentId}/vote - Opdaterer en kommentars antal stemmer
+
 
 app.Run();
