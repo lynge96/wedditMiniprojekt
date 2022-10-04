@@ -37,12 +37,12 @@ namespace weddit_api.Service
 
             db.SaveChanges();
 
-            //Comment comment = db.Comments.FirstOrDefault()!;
-            //if (comment == null)
-            //{
-            //    db.Comments.Add(new Comment { Date = DateTime.Now, User = new User("Kim"), Text = "Du er lort", PostId = 1});
-            //    db.Comments.Add(new Comment { Date = DateTime.Now, User = new User("Tina"), Text = "Du er nice", PostId = 2});
-            //}
+            Comment comment = db.Comments.FirstOrDefault()!;
+            if (comment == null)
+            {
+                db.Comments.Add(new Comment { Date = DateTime.Now, User = new User("Kim"), Text = "Du er lort", PostId = 1 });
+                db.Comments.Add(new Comment { Date = DateTime.Now, User = new User("Tina"), Text = "Du er nice", PostId = 2 });
+            }
 
             db.SaveChanges();
         }
