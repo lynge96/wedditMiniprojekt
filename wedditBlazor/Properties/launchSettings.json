@@ -3,16 +3,16 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:4215",
-      "sslPort": 44305
+      "applicationUrl": "http://localhost:10780",
+      "sslPort": 44324
     }
   },
   "profiles": {
-    "wedditBlazor": {
+    "wedditBlazor3": {
       "commandName": "Project",
       "launchBrowser": true,
       "inspectUri": "{wsProtocol}://{url.hostname}:{url.port}/_framework/debug/ws-proxy?browser={browserInspectUri}",
-      "applicationUrl": "https://localhost:7034;http://localhost:5254",
+      "applicationUrl": "https://localhost:7128;http://localhost:5021",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

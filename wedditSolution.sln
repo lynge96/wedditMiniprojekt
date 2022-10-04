@@ -5,11 +5,7 @@ VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "weddit-api", "weddit-api\weddit-api.csproj", "{2610F3AC-46FB-4CB3-AFDF-85D0DBA2430A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "wedditBlazor", "wedditBlazor\wedditBlazor.csproj", "{3F81E129-93FF-43FD-8567-FE708D169B9D}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "wedditBlazor2", "wedditBlazor2\wedditBlazor2.csproj", "{9C92396D-9A36-4DF1-A63D-484B81FE9B6F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "wedditBlazor3", "wedditBlazor3\wedditBlazor3.csproj", "{50FE91FC-6ADB-447C-9AFD-DF9563F992B4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "wedditBlazor", "wedditBlazor\wedditBlazor.csproj", "{3304B406-8F7F-447D-9316-852BEC45A072}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -40,5 +36,13 @@ Global
 		{50FE91FC-6ADB-447C-9AFD-DF9563F992B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{50FE91FC-6ADB-447C-9AFD-DF9563F992B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{50FE91FC-6ADB-447C-9AFD-DF9563F992B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{525E2178-04D6-4CBA-89FC-7F8147EE9BF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{525E2178-04D6-4CBA-89FC-7F8147EE9BF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{525E2178-04D6-4CBA-89FC-7F8147EE9BF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{525E2178-04D6-4CBA-89FC-7F8147EE9BF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3304B406-8F7F-447D-9316-852BEC45A072}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3304B406-8F7F-447D-9316-852BEC45A072}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3304B406-8F7F-447D-9316-852BEC45A072}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3304B406-8F7F-447D-9316-852BEC45A072}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
