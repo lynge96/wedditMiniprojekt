@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
 using Data;
-using Model;
+using shared.Model;
 using System;
 
 namespace weddit_api.Service
@@ -66,14 +66,26 @@ namespace weddit_api.Service
         }
 
         // Tilføjer en kommentar
-        public void AddComment(Comment newComment)
+        public string AddComment(Comment newComment)
         {
             db.Comments.Add(new Comment { Date = DateTime.Now, User = newComment.User, Text = newComment.Text, PostId = newComment.PostId});
 
             db.SaveChanges();
+
+            return "New comment added";
         }
 
-        // Tilføjer en stemme til en kommentar
+        // Tilføjer en post
+        public string AddPost(Post newPost)
+        {
+            db.Posts.Add(new Post { Date = DateTime.Now, Title = newPost.Title, Text = newPost.Text, User = newPost.User });
+
+            db.SaveChanges();
+
+            return "New post added";
+        }
+
+        // Tilføjer en stemme til en post
         public string AddVotePost(int postId, bool vote)
         {
             if (vote == true)
@@ -92,16 +104,29 @@ namespace weddit_api.Service
             db.SaveChanges();
 
             return "Vote added";
-
         }
 
-        // Tilføjer en post
-        public void AddPost(Post newPost)
+        // Tilføjer en stemme til en kommentar
+        public string AddVoteComment(int commentId, bool vote)
         {
-            db.Post.Add(new Post { Date = DateTime.Now, Title = newPost.Title, Text = newPost.Text, User = newPost.User });
+            if (vote == true)
+            {
+                Comment comment = db.Comments.Where(x => x.CommentId == commentId).First();
+
+                comment.Votes++;
+            }
+            else if (vote == false)
+            {
+                Comment comment = db.Comments.Where(x => x.CommentId == commentId).First();
+
+                comment.Votes--;
+            }
 
             db.SaveChanges();
+
+            return "Vote added";
         }
+
 
     }
 

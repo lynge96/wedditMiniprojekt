@@ -2,7 +2,7 @@ using System.Threading;
 using Data;
 using Microsoft.AspNetCore.Http.Json;
 using Microsoft.EntityFrameworkCore;
-using Model;
+using shared.Model;
 using weddit_api.Service;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -58,10 +58,10 @@ app.Use(async (context, next) =>
 });
 
 // DataService fås via "Dependency Injection" (DI)
-app.MapGet("/", (DataService service) =>
-{
-    return new { message = "Hello World!" };
-});
+// app.MapGet("/", (DataService service) =>
+// {
+//     return new { message = "Hello World!" };
+// });
 
 
 // GET/api/posts - Returnerer en liste over alle tråde
@@ -92,35 +92,44 @@ app.MapPost("/api/posts/{postId}", (DataService service, newCommentRecord newCom
 {
     Comment newComment = new Comment { User = new User(newCommentRecord.username), Text = newCommentRecord.text, PostId = postId };
 
-    service.AddComment(newComment);
-});
-
-// POST /api/posts - Laver en ny post, tilføjer til forsiden.
-app.MapGet("/api/posts", (DataService service, newPostRecord postRecord) =>
-{
-    Post newPost = new Post { Title = postRecord.title, User = new User(postRecord.username), Text = postRecord
-    .text };
-
-    service.AddPost(newPost);
-});
-
-
-// PUT /api/post/{postId}/ vote - Opdaterer en tråds antal stemmer
-app.MapPut("/api/posts/{postId}", (DataService service, voteRecord vote, int postId) =>
-{
-
-    string results = service.AddVotePost(postId, vote.updown);
+    string results = service.AddComment(newComment);
 
     return new { message = results };
 });
 
-// PUT /api/posts/{postsId}/comments/{commentId}/vote - Opdaterer en kommentars antal stemmer
+// POST /api/posts - Laver en ny post, tilføjer til forsiden.
+app.MapPost("/api/posts", (DataService service, newPostRecord postRecord) =>
+{
+    Post newPost = new Post { Title = postRecord.title, User = new User(postRecord.username), Text = postRecord
+    .text };
 
+    string results = service.AddPost(newPost);
+
+    return new { message = results };    
+});
+
+
+// PUT /api/post/{postId}/vote - Opdaterer en tråds antal stemmer
+app.MapPut("/api/posts/{postId}/vote", (DataService service, voteRecord vote, int postId) =>
+{
+
+    string results = service.AddVotePost(postId, vote.stemmer);
+
+    return new { message = results };
+});
+
+// PUT /api/posts/comments/{commentId}/vote - Opdaterer en kommentars antal stemmer
+app.MapPut("/api/posts/comments/{commentId}/vote", (DataService service, voteRecord vote, int commentId) =>
+{
+    string results = service.AddVoteComment(commentId, vote.stemmer);
+
+    return new { message = results };
+});
 
 app.Run();
 
 // Til forside posts
 record newCommentRecord(string username, string text);
-record voteRecord(bool updown);
+record voteRecord(bool stemmer);
 record newPostRecord(string title, string username, string text);
 

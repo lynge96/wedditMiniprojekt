@@ -1,4 +1,4 @@
-namespace Model
+namespace shared.Model
 {
     public class Post
     {

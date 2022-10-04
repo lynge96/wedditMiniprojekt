@@ -24,4 +24,7 @@
     <Folder Include="Service\" />
     <Folder Include="Migrations\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\shared\shared.csproj" />
+  </ItemGroup>
 </Project>
