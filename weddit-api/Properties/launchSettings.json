@@ -11,7 +11,7 @@
     "weddit_api": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "https://localhost:7184;http://localhost:5094",
+      "applicationUrl": "http://localhost:57452",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
