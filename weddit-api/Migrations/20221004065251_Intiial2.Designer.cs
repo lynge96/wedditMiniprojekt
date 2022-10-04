@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace weddit_api.Migrations
 {
     [DbContext(typeof(PostContext))]
-    [Migration("20220927095319_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20221004065251_Intiial2")]
+    partial class Intiial2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,14 +21,14 @@ namespace weddit_api.Migrations
 
             modelBuilder.Entity("Model.Comment", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<long>("CommentId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("TEXT");
 
-                    b.Property<long?>("PostId")
+                    b.Property<long>("PostId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Text")
@@ -41,7 +41,7 @@ namespace weddit_api.Migrations
                     b.Property<int>("Votes")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("Id");
+                    b.HasKey("CommentId");
 
                     b.HasIndex("PostId");
 
@@ -82,7 +82,7 @@ namespace weddit_api.Migrations
 
             modelBuilder.Entity("Model.User", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<long>("UserId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -90,7 +90,7 @@ namespace weddit_api.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("Id");
+                    b.HasKey("UserId");
 
                     b.ToTable("Users");
                 });
@@ -99,7 +99,9 @@ namespace weddit_api.Migrations
                 {
                     b.HasOne("Model.Post", null)
                         .WithMany("Comments")
-                        .HasForeignKey("PostId");
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Model.User", "User")
                         .WithMany()

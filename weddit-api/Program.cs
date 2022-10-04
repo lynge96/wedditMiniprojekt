@@ -1,6 +1,8 @@
+using System.Threading;
 using Data;
 using Microsoft.AspNetCore.Http.Json;
 using Microsoft.EntityFrameworkCore;
+using Model;
 using weddit_api.Service;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -61,4 +63,49 @@ app.MapGet("/", (DataService service) =>
     return new { message = "Hello World!" };
 });
 
+
+// GET/api/posts - Returnerer en liste over alle tråde
+app.MapGet("/api/posts", (DataService service) =>
+    {
+        return service.GetPosts().Select(x => new
+        {
+            postId = x.PostId,
+            date = x.Date,
+            title = x.Title,
+            user = x.User,
+            votes = x.Votes,
+            text = x.Text,
+            commentsCount = x.Comments.Count()
+        });
+    });
+
+
+// GET /api/posts/{postId} - Returnerer en tråd med tilhørende kommentarer
+app.MapGet("/api/posts/{postId}", (DataService service, int postId) =>
+{
+    return service.GetPost(postId);
+});
+
+
+// POST /api/posts/{postId}/ comments - Poster en ny kommentar, og tilføjer den til tråden
+app.MapPost("/api/posts/{postId}", (DataService service, newCommentRecord newCommentRecord, int postId) =>
+{
+    Comment newComment = new Comment { User = new User(newCommentRecord.username), Text = newCommentRecord.text, PostId = postId };
+
+    service.AddComment(newComment);
+});
+
+
+// PUT /api/post/{postId}/ vote - Opdaterer en tråds antal stemmer
+app.MapPut("/api/posts/{postId}", (DataService service, Boolean truefalse, int postId) =>
+{
+    service.AddVotePost(postId, truefalse);
+});
+
+// PUT /api/posts/{postsId}/comments/{commentId}/vote - Opdaterer en kommentars antal stemmer
+
+
 app.Run();
+
+// Til forside posts
+record newCommentRecord(string username, string text);
