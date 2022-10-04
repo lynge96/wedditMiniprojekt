@@ -87,12 +87,21 @@ app.MapGet("/api/posts/{postId}", (DataService service, int postId) =>
 });
 
 
-// POST /api/posts/{postId}/ comments - Poster en ny kommentar, og tilføjer den til tråden
+// POST /api/posts/{postId}/comments - Poster en ny kommentar, og tilføjer den til tråden
 app.MapPost("/api/posts/{postId}", (DataService service, newCommentRecord newCommentRecord, int postId) =>
 {
     Comment newComment = new Comment { User = new User(newCommentRecord.username), Text = newCommentRecord.text, PostId = postId };
 
     service.AddComment(newComment);
+});
+
+// POST /api/posts - Laver en ny post, tilføjer til forsiden.
+app.MapGet("/api/posts", (DataService service, newPostRecord postRecord) =>
+{
+    Post newPost = new Post { Title = postRecord.title, User = new User(postRecord.username), Text = postRecord
+    .text };
+
+    service.AddPost(newPost);
 });
 
 
@@ -113,4 +122,5 @@ app.Run();
 // Til forside posts
 record newCommentRecord(string username, string text);
 record voteRecord(bool updown);
+record newPostRecord(string title, string username, string text);
 

@@ -94,6 +94,15 @@ namespace weddit_api.Service
             return "Vote added";
 
         }
+
+        // Tilføjer en post
+        public void AddPost(Post newPost)
+        {
+            db.Post.Add(new Post { Date = DateTime.Now, Title = newPost.Title, Text = newPost.Text, User = newPost.User });
+
+            db.SaveChanges();
+        }
+
     }
 
 }
