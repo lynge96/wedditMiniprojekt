@@ -45,6 +45,48 @@ namespace weddit_api.Service
             db.SaveChanges();
         }
 
+        // Hent alle posts til forsiden
+        public List<Post> GetPosts()
+        {
+            return db.Posts.Include(x => x.User).Include(x => x.Comments).ToList();
+        }
+
+        // Hent en specifik post
+        public Post GetPost(int postId)
+        {
+            Post post = db.Posts.Include(x => x.User).Include(x => x.Comments).Where(x => x.PostId == postId).First();
+
+            List<Comment> kommentarer = db.Comments.Include(x => x.User).Where(x => x.PostId == postId).ToList();
+
+            post.Comments = kommentarer;
+
+            return post;
+        }
+
+        // Tilføjer en kommentar
+        public void AddComment(Comment newComment)
+        {
+            db.Comments.Add(new Comment { Date = DateTime.Now, User = newComment.User, Text = newComment.Text, PostId = newComment.PostId});
+
+            db.SaveChanges();
+        }
+
+        // Tilføjer en stemme til en kommentar
+        public void AddVotePost(int postId, Boolean vote)
+        {
+            if (vote == true)
+            {
+                db.Posts.Where(x => x.PostId == postId).Select(x => x.Votes + 1);
+            } else
+            {
+                db.Posts.Where(x => x.PostId == postId).Select(x => x.Votes - 1);
+            }
+
+            db.SaveChanges();
+
+        }
     }
+
 }
+
 

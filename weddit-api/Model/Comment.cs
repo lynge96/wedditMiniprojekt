@@ -18,6 +18,7 @@ namespace Model
             Votes = votes;
             PostId = postId;
         }
+
         public Comment()
         {
 
