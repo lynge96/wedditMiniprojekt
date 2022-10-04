@@ -3,7 +3,7 @@ namespace Model
 
     public class User
     {
-        public long Id { get; set; }
+        public long UserId { get; set; }
         public string Username { get; set; }
 
         public User(string username = "")

@@ -3,7 +3,7 @@ namespace Model
 
     public class Comment
     {
-        public long Id { get; set; }
+        public long CommentId { get; set; }
         public DateTime Date { get; set; }
         public User User { get; set; }
         public string Text { get; set; }
