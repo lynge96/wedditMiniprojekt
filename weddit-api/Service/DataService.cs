@@ -74,17 +74,24 @@ namespace weddit_api.Service
         }
 
         // Tilføjer en stemme til en kommentar
-        public void AddVotePost(int postId, Boolean vote)
+        public string AddVotePost(int postId, bool vote)
         {
             if (vote == true)
             {
-                db.Posts.Where(x => x.PostId == postId).Select(x => x.Votes + 1);
-            } else
+                Post post = db.Posts.Where(x => x.PostId == postId).First();
+
+                post.Votes++;
+            }
+            else if (vote == false)
             {
-                db.Posts.Where(x => x.PostId == postId).Select(x => x.Votes - 1);
+                Post post = db.Posts.Where(x => x.PostId == postId).First();
+
+                post.Votes--;
             }
 
             db.SaveChanges();
+
+            return "Vote added";
 
         }
     }

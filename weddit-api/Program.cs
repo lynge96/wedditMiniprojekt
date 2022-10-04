@@ -97,9 +97,12 @@ app.MapPost("/api/posts/{postId}", (DataService service, newCommentRecord newCom
 
 
 // PUT /api/post/{postId}/ vote - Opdaterer en tråds antal stemmer
-app.MapPut("/api/posts/{postId}", (DataService service, Boolean truefalse, int postId) =>
+app.MapPut("/api/posts/{postId}", (DataService service, voteRecord vote, int postId) =>
 {
-    service.AddVotePost(postId, truefalse);
+
+    string results = service.AddVotePost(postId, vote.updown);
+
+    return new { message = results };
 });
 
 // PUT /api/posts/{postsId}/comments/{commentId}/vote - Opdaterer en kommentars antal stemmer
@@ -109,3 +112,5 @@ app.Run();
 
 // Til forside posts
 record newCommentRecord(string username, string text);
+record voteRecord(bool updown);
+

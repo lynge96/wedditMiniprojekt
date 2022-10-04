@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace weddit_api.Migrations
 {
     [DbContext(typeof(PostContext))]
-    [Migration("20221004065251_Intiial2")]
-    partial class Intiial2
+    [Migration("20221004070334_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
