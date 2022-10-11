@@ -88,9 +88,9 @@ app.MapGet("/api/posts/{postId}", (DataService service, int postId) =>
 
 
 // POST /api/posts/{postId}/comments - Poster en ny kommentar, og tilføjer den til tråden
-app.MapPost("/api/posts/{postId}", (DataService service, newCommentRecord newCommentRecord, int postId) =>
+app.MapPost("/api/posts/{postId}/comments", (DataService service, Comment comment, int postId) =>
 {
-    Comment newComment = new Comment { User = new User(newCommentRecord.username), Text = newCommentRecord.text, PostId = postId };
+    Comment newComment = new Comment { User = comment.User, Text = comment.Text, PostId = postId };
 
     string results = service.AddComment(newComment);
 
@@ -129,6 +129,6 @@ app.MapPut("/api/posts/comments/{commentId}/vote", (DataService service, Vote vo
 app.Run();
 
 // Til forside posts
-record newCommentRecord(string username, string text);
+// record newCommentRecord(string username, string text);
 record newPostRecord(string title, string username, string text);
 

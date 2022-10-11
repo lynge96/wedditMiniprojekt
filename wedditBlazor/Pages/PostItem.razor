@@ -15,11 +15,15 @@ else
     <p>@Post.Text</p>
     <p>Votes: @Post.Votes</p>
 
+    <CreateComment PostId=@PostId></CreateComment>
+
     @foreach (var comment in Post.Comments)
     {
         <p>@comment.User.Username @comment.Date.ToShortDateString()</p>
         <p>@comment.Text</p>
         <p>@comment.Votes</p>
+        <td><button @onclick="() => Vote(comment.CommentId, true)">Updoot</button></td>
+        <td><button @onclick="() => Vote(comment.CommentId, false)">Downdoot</button></td>
     }
 }
 
@@ -34,6 +38,10 @@ else
     protected override async Task OnInitializedAsync()
     {
         Post = await apiService.GetPost(PostId);
+    }
+    private async void Vote(int id, bool updown)
+    {
+        var updatedComment = await apiService.VoteComment(id, updown);
     }
 
 }

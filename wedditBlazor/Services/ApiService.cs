@@ -50,6 +50,45 @@ namespace wedditBlazor.Services
             // Return the updated post (vote increased)
             return updatedPost;
         }
+
+        public async Task<Comment> VoteComment(int id, bool voteComment)
+        {
+            string url = $"{baseAPI}posts/comments/{id}/vote/";
+
+            // Post JSON to API, save the HttpResponseMessage
+            HttpResponseMessage msg = await http.PutAsJsonAsync(url, new Vote { Stemmer = voteComment } );
+
+            // Get the JSON string from the response
+            string json = msg.Content.ReadAsStringAsync().Result;
+
+            // Deserialize the JSON string to a Post object
+            Comment? updatedComment = JsonSerializer.Deserialize<Comment>(json, new JsonSerializerOptions {
+                PropertyNameCaseInsensitive = true // Ignore case when matching JSON properties to C# properties
+            });
+
+            // Return the updated post (vote increased)
+            return updatedComment;
+        }
+
+
+        public async Task<Comment> CreateComment(string content, int postId, string username)
+        {
+            string url = $"{baseAPI}posts/{postId}/comments";
+        
+            // Post JSON to API, save the HttpResponseMessage
+            HttpResponseMessage msg = await http.PostAsJsonAsync(url, new Comment { User = new User(username), Text = content, PostId = postId } );
+
+            // Get the JSON string from the response
+            string json = msg.Content.ReadAsStringAsync().Result;
+
+            // Deserialize the JSON string to a Comment object
+            Comment? newComment = JsonSerializer.Deserialize<Comment>(json, new JsonSerializerOptions {
+                PropertyNameCaseInsensitive = true // Ignore case when matching JSON properties to C# properties 
+            });
+
+            // Return the new comment 
+            return newComment;
+        }
     }
 }
 
