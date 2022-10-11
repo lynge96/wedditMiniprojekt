@@ -1,0 +1,47 @@
+﻿@inherits LayoutComponentBase
+
+@using shared.Model;
+@using wedditBlazor.Services;
+@inject ApiService apiService;
+
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+
+@if (posts == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table>
+        <tr>
+            <th>Title</th>
+            <th>User</th>
+            <th>Dato</th>
+            <th>Votes</th>
+        </tr>
+        @foreach (var post in posts)
+        {
+            <tr>
+                <td><a href="/posts/@post.PostId">@post.Title</a></td>
+                <td>@post.User.Username</td>
+                <td>@post.Date</td>
+                <td>@post.Votes</td>
+            </tr>
+        }
+    </table>
+
+}
+
+
+
+@code {
+    private Post[]? posts;
+    private Post? votePost;
+
+    protected override async Task OnInitializedAsync()
+    {
+        posts = await apiService.GetPosts();
+    }
+}
+
