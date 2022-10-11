@@ -98,10 +98,10 @@ app.MapPost("/api/posts/{postId}/comments", (DataService service, Comment commen
 });
 
 // POST /api/posts - Laver en ny post, tilføjer til forsiden.
-app.MapPost("/api/posts", (DataService service, newPostRecord postRecord) =>
+app.MapPost("/api/posts", (DataService service, Post post) =>
 {
-    Post newPost = new Post { Title = postRecord.title, User = new User(postRecord.username), Text = postRecord
-    .text };
+    Post newPost = new Post { Title = post.Title, User = post.User, Text = post
+    .Text };
 
     string results = service.AddPost(newPost);
 
@@ -128,7 +128,4 @@ app.MapPut("/api/posts/comments/{commentId}/vote", (DataService service, Vote vo
 
 app.Run();
 
-// Til forside posts
-// record newCommentRecord(string username, string text);
-record newPostRecord(string title, string username, string text);
 

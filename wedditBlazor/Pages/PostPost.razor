@@ -1,0 +1,39 @@
+@page "/createpost"
+
+@using wedditBlazor.Services;
+@using shared.Model;
+@inject ApiService apiService
+@inject NavigationManager NavManager
+
+
+<div>
+    <h3>Write a Post</h3>
+    <input placeholder="Title" type="input" id="title" @bind-value="title"/>
+    <input placeholder="User" type="input" id="user" @bind-value="user"/>
+    <input placeholder="Text" type="input" id="text" @bind-value="text"/>
+
+
+    <button id="createPostButton" type="button" @onclick="CreateNewPost">Post Post</button>
+</div>
+
+
+@code{
+    private string? user;
+    private string? title;
+    private string? text;
+
+    private async void CreateNewPost()
+    {
+        if (title == null || text == null)
+        {
+            return;
+        }
+        
+        await apiService.CreatePost(title, user, text);
+
+        NavManager.NavigateTo("/");
+    }
+
+
+
+}
