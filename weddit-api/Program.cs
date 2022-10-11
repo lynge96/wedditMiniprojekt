@@ -110,18 +110,18 @@ app.MapPost("/api/posts", (DataService service, newPostRecord postRecord) =>
 
 
 // PUT /api/post/{postId}/vote - Opdaterer en tråds antal stemmer
-app.MapPut("/api/posts/{postId}/vote", (DataService service, voteRecord vote, int postId) =>
+app.MapPut("/api/posts/{postId}/vote", (DataService service, Vote vote, int postId) =>
 {
 
-    string results = service.AddVotePost(postId, vote.stemmer);
+    string results = service.AddVotePost(postId, vote.Stemmer);
 
     return new { message = results };
 });
 
 // PUT /api/posts/comments/{commentId}/vote - Opdaterer en kommentars antal stemmer
-app.MapPut("/api/posts/comments/{commentId}/vote", (DataService service, voteRecord vote, int commentId) =>
+app.MapPut("/api/posts/comments/{commentId}/vote", (DataService service, Vote vote, int commentId) =>
 {
-    string results = service.AddVoteComment(commentId, vote.stemmer);
+    string results = service.AddVoteComment(commentId, vote.Stemmer);
 
     return new { message = results };
 });
@@ -130,6 +130,5 @@ app.Run();
 
 // Til forside posts
 record newCommentRecord(string username, string text);
-record voteRecord(bool stemmer);
 record newPostRecord(string title, string username, string text);
 

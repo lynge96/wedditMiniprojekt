@@ -2,7 +2,7 @@ namespace shared.Model
 {
     public class Post
     {
-        public long PostId { get; set; }
+        public int PostId { get; set; }
         public DateTime Date { get; set; }
         public string Title { get; set; }
         public User User { get; set; }

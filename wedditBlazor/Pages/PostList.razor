@@ -27,6 +27,9 @@ else
                 <td>@post.User.Username</td>
                 <td>@post.Date</td>
                 <td>@post.Votes</td>
+                <td><button @onclick="() => Vote(post.PostId, true)">Updoot</button></td>
+                <td><button @onclick="() => Vote(post.PostId, false)">Downdoot</button></td>
+
             </tr>
         }
     </table>
@@ -42,6 +45,11 @@ else
     protected override async Task OnInitializedAsync()
     {
         posts = await apiService.GetPosts();
+    }
+
+    private async void Vote(int id, bool updown)
+    {
+        var updatedPost = await apiService.VotePost(id, updown);
     }
 }
 

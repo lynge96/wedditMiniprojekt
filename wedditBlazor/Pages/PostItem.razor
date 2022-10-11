@@ -1,0 +1,39 @@
+@page "/posts/{id}"
+
+@using wedditBlazor.Services;
+@using shared.Model;
+@inject ApiService apiService
+
+@if (Post == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <p>@Post.Title</p>
+    <p>User: @Post.User.Username Dato: @Post.Date.ToShortDateString()</p>
+    <p>@Post.Text</p>
+    <p>Votes: @Post.Votes</p>
+
+    @foreach (var comment in Post.Comments)
+    {
+        <p>@comment.User.Username @comment.Date.ToShortDateString()</p>
+        <p>@comment.Text</p>
+        <p>@comment.Votes</p>
+    }
+}
+
+
+@code {
+    [Parameter]
+    public string Id { get; set; }
+    public int PostId { get { return int.Parse(Id); } }
+    public Post Post { get; set; }
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        Post = await apiService.GetPost(PostId);
+    }
+
+}
