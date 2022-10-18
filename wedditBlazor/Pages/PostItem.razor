@@ -10,20 +10,27 @@
 }
 else
 {
-    <p>@Post.Title</p>
+    <button><a href="/">Forside</a></button>
+
+    <p><strong>@Post.Title</strong></p>
     <p>User: @Post.User.Username Dato: @Post.Date.ToShortDateString()</p>
     <p>@Post.Text</p>
     <p>Votes: @Post.Votes</p>
+    <button @onclick="() => VotePost(PostId, true)">Upvote</button>
+    <button @onclick="() => VotePost(PostId, false)">Downvote</button>
+
 
     <CreateComment PostId=@PostId></CreateComment>
+    <br>
 
     @foreach (var comment in Post.Comments)
     {
-        <p>@comment.User.Username @comment.Date.ToShortDateString()</p>
-        <p>@comment.Text</p>
-        <p>@comment.Votes</p>
-        <td><button @onclick="() => Vote(comment.CommentId, true)">Updoot</button></td>
-        <td><button @onclick="() => Vote(comment.CommentId, false)">Downdoot</button></td>
+        <p><strong>@comment.User.Username</strong> @comment.Date.ToShortDateString()</p>
+        <p>> @comment.Text</p>
+        <p>Votes: @comment.Votes</p>
+        <td><button @onclick="() => VoteComment(comment.CommentId, true)">Upvote</button></td>
+        <td><button @onclick="() => VoteComment(comment.CommentId, false)">Downvote</button></td>
+        <br>
     }
 }
 
@@ -38,10 +45,23 @@ else
     protected override async Task OnInitializedAsync()
     {
         Post = await apiService.GetPost(PostId);
+
+        InvokeAsync(() =>
+        {
+            StateHasChanged();
+        });
     }
-    private async void Vote(int id, bool updown)
+    private async void VoteComment(int id, bool upDownVote)
     {
-        var updatedComment = await apiService.VoteComment(id, updown);
+        var updatedComment = await apiService.VoteComment(id, upDownVote);
+
+        OnInitializedAsync();
     }
 
+    private async void VotePost(int id, bool upDownVote)
+    {
+        var updatedPost = await apiService.VotePost(id, upDownVote);
+
+        OnInitializedAsync();
+    }
 }
