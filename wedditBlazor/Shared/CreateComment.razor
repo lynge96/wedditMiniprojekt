@@ -1,5 +1,6 @@
 @using wedditBlazor.Services;
 @inject ApiService apiService
+@using shared.Model;
 
 <div>
     <br/>
@@ -7,7 +8,7 @@
     <input placeholder="Content" type="input" id="content" @bind-value="content"/>
     <input placeholder="User" type="input" id="user" @bind-value="user"/>
 
-    <button id="createPostButton" type="button" @onclick="CreateNewComment">Post comment</button>
+    <button id="createCommentButton" type="button" @onclick="CreateNewComment">Post comment</button>
 </div>
 
 @code {
@@ -17,6 +18,17 @@
     public int PostId { get; set; }
     private string? content;
     private string? user;
+    private Post? post;
+
+    protected override async Task OnInitializedAsync()
+    {
+        post = await apiService.GetPost(PostId);
+
+        InvokeAsync(() =>
+        {
+            StateHasChanged();
+        });
+    }
     private async void CreateNewComment()
     {
         if (content == null)
@@ -25,5 +37,7 @@
         }
         
         await apiService.CreateComment(content, PostId, user);
+
+        OnInitializedAsync();
     }
 }

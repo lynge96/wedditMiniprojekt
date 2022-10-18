@@ -2,7 +2,7 @@
 
 @using shared.Model;
 @using wedditBlazor.Services;
-@inject ApiService apiService;
+@inject ApiService apiService
 
 @using Microsoft.Extensions.Configuration
 @inject IConfiguration Configuration
@@ -27,8 +27,8 @@ else
                 <td>@post.User.Username</td>
                 <td>@post.Date</td>
                 <td>@post.Votes</td>
-                <td><button @onclick="() => Vote(post.PostId, true)">Updoot</button></td>
-                <td><button @onclick="() => Vote(post.PostId, false)">Downdoot</button></td>
+                <td><button @onclick="() => VotePost(post.PostId, true)">Upvote</button></td>
+                <td><button @onclick="() => VotePost(post.PostId, false)">Downvote</button></td>
 
             </tr>
         }
@@ -45,11 +45,18 @@ else
     protected override async Task OnInitializedAsync()
     {
         posts = await apiService.GetPosts();
+
+        InvokeAsync(() =>
+        {
+            StateHasChanged();
+        });
     }
 
-    private async void Vote(int id, bool updown)
+    private async void VotePost(int id, bool updown)
     {
         var updatedPost = await apiService.VotePost(id, updown);
+        OnInitializedAsync();
+
     }
 }
 

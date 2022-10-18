@@ -6,14 +6,17 @@
 @inject NavigationManager NavManager
 
 
+<button><a href="/">Forside</a></button>
+
+
 <div>
-    <h3>Write a Post</h3>
+    <h3>Submit a Post</h3>
     <input placeholder="Title" type="input" id="title" @bind-value="title"/>
     <input placeholder="User" type="input" id="user" @bind-value="user"/>
     <input placeholder="Text" type="input" id="text" @bind-value="text"/>
 
 
-    <button id="createPostButton" type="button" @onclick="CreateNewPost">Post Post</button>
+    <button id="createPostButton" type="button" @onclick="CreateNewPost">Submit</button>
 </div>
 
 
