@@ -101,7 +101,7 @@ app.MapPost("/api/posts/{postId}/comments", (DataService service, Comment commen
 app.MapPost("/api/posts", (DataService service, Post post) =>
 {
     Post newPost = new Post { Title = post.Title, User = post.User, Text = post
-    .Text };
+    .Text, TextIsLink = post.TextIsLink };
 
     string results = service.AddPost(newPost);
 
