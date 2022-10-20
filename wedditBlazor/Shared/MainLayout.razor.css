@@ -4,6 +4,30 @@
     flex-direction: column;
 }
 
+/* unvisited link */
+/*a:link {
+    color: black;
+    text-decoration: none;
+}*/
+
+/* visited link */
+/*a:visited {
+    color: black;
+    text-decoration: none;
+}*/
+
+/* mouse over link */
+/*a:hover {
+    color: none;
+    text-decoration: none;
+}*/
+
+/* selected link */
+/*a:active {
+    color: black;
+    text-decoration: none;
+}*/
+
 main {
     flex: 1;
 }

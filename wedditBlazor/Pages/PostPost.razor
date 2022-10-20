@@ -5,18 +5,20 @@
 @inject ApiService apiService
 @inject NavigationManager NavManager
 
+<PageTitle>Create Post</PageTitle>
 
-<button><a href="/">Forside</a></button>
+<button><a style="text-decoration:none; color: black" href="/">Forside</a></button>
 
 
 <div>
-    <h3>Submit a Post</h3>
-    <input placeholder="Title" type="input" id="title" @bind-value="title"/>
-    <input placeholder="User" type="input" id="user" @bind-value="user"/>
-    <input placeholder="Text" type="input" id="text" @bind-value="text"/>
+    <h3>Write a Post</h3>
+    <input placeholder="Title" type="input" id="title" @bind-value="title" />
+    <input placeholder="User" type="input" id="user" @bind-value="user" />
+    <input placeholder="Text" type="input" id="text" @bind-value="text" />
+    <input type="checkbox" class="form-check-input" id="textIsLink" @onchange="eventArgs => { CheckboxClicked(eventArgs.Value); }" />
 
 
-    <button id="createPostButton" type="button" @onclick="CreateNewPost">Submit</button>
+    <button id="createPostButton" type="button" @onclick="CreateNewPost">Post Post</button>
 </div>
 
 
@@ -24,6 +26,7 @@
     private string? user;
     private string? title;
     private string? text;
+    private bool textIsLink = false;
 
     private async void CreateNewPost()
     {
@@ -31,12 +34,24 @@
         {
             return;
         }
-        
-        await apiService.CreatePost(title, user, text);
+
+        await apiService.CreatePost(title, user, text, textIsLink);
 
         NavManager.NavigateTo("/");
     }
 
+
+    private void CheckboxClicked(object checkedValue)
+    {
+        if ((bool)checkedValue)
+        {
+            textIsLink = true;
+        }
+        else
+        {
+            textIsLink = false;
+        }
+    }
 
 
 }

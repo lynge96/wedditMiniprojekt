@@ -8,9 +8,10 @@ namespace shared.Model
         public User User { get; set; }
         public int Votes { get; set; }
         public string Text { get; set; }
+        public bool TextIsLink { get; set; }
         public List<Comment> Comments { get; set; } = new List<Comment>();
 
-        public Post(DateTime date = new DateTime(), string title = "", User user = null, int votes = 0, string text = "")
+        public Post(DateTime date = new DateTime(), string title = "", User user = null, int votes = 0, string text = "", bool TextIsLink = false)
         {
             Date = date;
             Title = title;

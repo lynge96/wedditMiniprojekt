@@ -10,17 +10,25 @@
 }
 else
 {
-    <button><a href="/">Forside</a></button>
+    <button><a style="text-decoration:none; color: black" href="/">Forside</a></button>
 
     <p><strong>@Post.Title</strong></p>
     <p>User: @Post.User.Username Dato: @Post.Date.ToShortDateString()</p>
-    <p>@Post.Text</p>
+    @if (Post.TextIsLink == false)
+    {
+        <p>@Post.Text</p>
+    }
+    else
+    {
+        <p>Link: <a href="https://@Post.Text">@Post.Text</a></p>
+    }
     <p>Votes: @Post.Votes</p>
     <button @onclick="() => VotePost(PostId, true)">Upvote</button>
     <button @onclick="() => VotePost(PostId, false)">Downvote</button>
 
 
     <CreateComment PostId=@PostId></CreateComment>
+
     <br>
 
     @foreach (var comment in Post.Comments)

@@ -90,12 +90,12 @@ namespace wedditBlazor.Services
             return newComment;
         }
 
-        public async Task<Post> CreatePost(string title, string username, string text)
+        public async Task<Post> CreatePost(string title, string username, string text, bool textIsLink)
         {
             string url = $"{baseAPI}posts/";
         
             // Post JSON to API, save the HttpResponseMessage
-            HttpResponseMessage msg = await http.PostAsJsonAsync(url, new Post { User = new User(username), Text = text, Title = title } );
+            HttpResponseMessage msg = await http.PostAsJsonAsync(url, new Post { User = new User(username), Text = text, Title = title, TextIsLink = textIsLink } );
 
             // Get the JSON string from the response
             string json = msg.Content.ReadAsStringAsync().Result;

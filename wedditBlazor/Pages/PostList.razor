@@ -13,20 +13,25 @@
 }
 else
 {
+    <i>Sorter efter:</i>
+    <button @onclick="() => Sort(1)">Flest upvotes</button>
+    <button @onclick="() => Sort(2)">Færrest upvotes</button>
+    <button @onclick="() => Sort(3)">Nyeste</button>
+
     <table>
         <tr>
+            <th>Votes</th>
             <th>Title</th>
             <th>User</th>
             <th>Dato</th>
-            <th>Votes</th>
         </tr>
-        @foreach (var post in posts)
+        @foreach (var post in postFilter)
         {
             <tr>
+                <td>@post.Votes</td>
                 <td><a href="/posts/@post.PostId">@post.Title</a></td>
                 <td>@post.User.Username</td>
                 <td>@post.Date</td>
-                <td>@post.Votes</td>
                 <td><button @onclick="() => VotePost(post.PostId, true)">Upvote</button></td>
                 <td><button @onclick="() => VotePost(post.PostId, false)">Downvote</button></td>
 
@@ -40,11 +45,31 @@ else
 
 @code {
     private Post[]? posts;
+    private Post[]? postFilter;
     private Post? votePost;
+
+    private void Sort(int filter)
+    {
+        if (filter == 1)
+        {
+            postFilter = posts.OrderByDescending(x => x.Votes).ToArray();
+        }
+        else if (filter == 2)
+        {
+            postFilter = posts.OrderBy(x => x.Votes).ToArray();
+
+        }
+        else if (filter == 3)
+        {
+            postFilter = posts.OrderByDescending(x => x.Date).ToArray();
+        }
+    }
 
     protected override async Task OnInitializedAsync()
     {
         posts = await apiService.GetPosts();
+
+        postFilter = posts.OrderByDescending(x => x.Date).ToArray();
 
         InvokeAsync(() =>
         {

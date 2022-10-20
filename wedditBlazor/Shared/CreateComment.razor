@@ -28,6 +28,7 @@
         {
             StateHasChanged();
         });
+
     }
     private async void CreateNewComment()
     {
@@ -37,6 +38,10 @@
         }
         
         await apiService.CreateComment(content, PostId, user);
+
+        content = string.Empty;
+
+        user = string.Empty;
 
         OnInitializedAsync();
     }
