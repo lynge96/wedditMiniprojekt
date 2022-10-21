@@ -17,6 +17,8 @@ else
     <button @onclick="() => Sort(1)">Flest upvotes</button>
     <button @onclick="() => Sort(2)">Færrest upvotes</button>
     <button @onclick="() => Sort(3)">Nyeste</button>
+    <button @onclick="() => Sort(4)">Ældste</button>
+
 
     <table>
         <tr>
@@ -62,6 +64,10 @@ else
         else if (filter == 3)
         {
             postFilter = posts.OrderByDescending(x => x.Date).ToArray();
+        }
+        else if (filter == 4)
+        {
+            postFilter = posts.OrderBy(x => x.Date).ToArray();
         }
     }
 
